@@ -1,5 +1,5 @@
-# avto.net filter extension
+# avto.net boljši filter
 
-
+Izboljšani filtri iskanje po za avto.net.
 
 
