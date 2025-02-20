@@ -1,0 +1,16 @@
+.filter-wrapper{
+	display: flex;
+	flex-direction: column;
+	padding: 0 8px;
+	gap: 8px;
+	padding-top: 10px;
+}
+
+.filter-wrapper .input-wrapper{
+	display: flex;
+	gap: 8px;
+}
+
+.filter-wrapper .GO-Button-Orange{
+	line-height: 34px;
+}

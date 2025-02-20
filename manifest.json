@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "version": "1.0",
+  "name": "Avto.net boljši filter",
+  "description": "Izboljšani filtri iskanje po za avto.net.",
+  "content_scripts": [
+    {
+      "matches": ["https://www.avto.net/Ads/results.asp*"],
+      "js": ["side-filters.js"],
+      "css": ["filter.css"],
+      "run_at": "document_end"
+    },{
+      "matches": ["https://www.avto.net//Ads/Search.asp*"],
+      "js": ["start-filters.js"],
+      "css": ["filter.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": ["scripting", "webNavigation", "storage"],
+  "icons": {
+    "16": "icon_16.png",
+    "192": "icon_192.png"
+  }
+}
