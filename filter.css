@@ -14,3 +14,8 @@
 .filter-wrapper .GO-Button-Orange{
 	line-height: 34px;
 }
+
+.input-wrapper input{
+	width: 100%;
+	max-width: 150px;
+}

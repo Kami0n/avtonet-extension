@@ -4,26 +4,39 @@ const queryString = window.location.href;
 const sidebarVsi = document.querySelectorAll('.GO-ResultsMenuBox div div');
 for (const element of sidebarVsi) {
 	
-	const text = element.textContent;
-	if(text.includes('Cena')){
+	const text = (element.textContent+"").trim()+"";
+	
+	
+	
+	if(text === 'Cena'){
 		createFieldsForFilter(element.nextElementSibling, 'cena', 1000);
 	}
-	if(text.includes('Moč motorja (kW)')){
+	if(text === 'Cena (končna MPC)'){
+		createFieldsForFilter(element.nextElementSibling, 'subcena', 1, 1000, true);
+	}
+	
+	if(text === 'Moč motorja (kW)'){
 		createFieldsForFilter(element.nextElementSibling, 'kw', 10);
 	}
-	if(text.includes('Prevoženi km')){
+	if(text === 'Prevoženi km'){
 		createFieldsForFilter(element.nextElementSibling, 'subKM', 1000);
 	}
-	if(text.includes('Motor (ccm)')){
+	if(text === 'Motor (ccm)'){
 		createFieldsForFilter(element.nextElementSibling, 'ccm');
 	}
-	if(text.includes('Letnik 1.registracije')){
+	if(text === 'Letnik 1.registracije'){
 		createFieldsForFilter(element.nextElementSibling, 'letnik');
+	}
+	if(text === 'Max.skupna teža' ){
+		createFieldsForFilter(element.nextElementSibling, 'subMOC', 250, 40000, true );
+	}
+	if(text === 'Nosilnost' ){
+		createFieldsForFilter(element.nextElementSibling, 'subKG', 250, 40000, true );
 	}
 	
 }
 
-function createFieldsForFilter(parentElement, id, step = 1, max = 0){
+function createFieldsForFilter(parentElement, id, step = 1, max = 0, upper = false){
 	
 	// Create "From" input field
 	const fromLabel = document.createElement('label');
@@ -78,6 +91,7 @@ function createFieldsForFilter(parentElement, id, step = 1, max = 0){
 	button.textContent = "Potrdi"
 	button.classList = 'btn btn-block GO-Button-Orange newFilterAction';
 	button.dataset.idinputs = id;
+	button.dataset.upper = upper;
 	
 	filterWrapper.appendChild(button);
 	
@@ -93,11 +107,23 @@ document.addEventListener("click", function(e){
 		
 		let newQueryString = queryString;
 		
+		let min = 'Min';
+		let max = 'Max';
+		
+		if(target.dataset.upper){
+			min = min.toUpperCase();
+			max = max.toUpperCase();
+		}
+		
 		const fromValue = document.querySelector(`input#${id}-from`).value;
-		newQueryString = replaceUrlParameter(newQueryString, `${id}Min`, fromValue);
+		newQueryString = replaceUrlParameter(newQueryString, `${id}${min}`, fromValue);
 		
 		const toValue = document.querySelector(`input#${id}-to`).value;
-		newQueryString = replaceUrlParameter(newQueryString, `${id}Max`, toValue);
+		newQueryString = replaceUrlParameter(newQueryString, `${id}${max}`, toValue);
+		
+		console.log(fromValue);
+		console.log(toValue);
+		console.log(newQueryString);
 		
 		window.location.href = newQueryString
 	}
@@ -115,6 +141,10 @@ function getUrlParameter(paramName) {
 }
 
 function replaceUrlParameter(url, param, newValue) {
+	
+	if(!newValue || newValue == ''){
+		return url;
+	}
 	
 	// Create a URL object from the provided URL string
 	let urlObj = new URL(url);
