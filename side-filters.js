@@ -42,8 +42,11 @@ function createFieldsForFilter(parentElement, id, step = 1, max = 0, upper = fal
 	const fromLabel = document.createElement('label');
 	fromLabel.textContent = 'Od: ';
 	
+	const classes = 'filterNumber';
+	
 	const fromInput = document.createElement('input');
 	fromInput.type = 'number';
+	fromInput.classList = classes;
 	fromInput.min = 0;
 	fromInput.step = step;
 	fromInput.placeholder = 'min';
@@ -56,6 +59,7 @@ function createFieldsForFilter(parentElement, id, step = 1, max = 0, upper = fal
 	
 	const toInput = document.createElement('input');
 	toInput.type = 'number';
+	toInput.classList = classes;
 	toInput.min = 0;
 	if(max != 0){
 		toInput.max = max;
@@ -98,6 +102,15 @@ function createFieldsForFilter(parentElement, id, step = 1, max = 0, upper = fal
 	parentElement.appendChild(filterWrapper);
 	
 }
+
+document.addEventListener("keyup", function(e){
+	if (e.key === 'Enter' || e.keyCode === 13) {
+		if(e.target.closest("input.filterNumber")){
+			const button = e.target.parentNode.parentNode.querySelector(".newFilterAction");
+			button.click();
+		}
+	}
+});
 
 document.addEventListener("click", function(e){
 	const target = e.target.closest(".newFilterAction");
